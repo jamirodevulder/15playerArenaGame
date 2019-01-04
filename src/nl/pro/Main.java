@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
 
         Players[] players = new Players[StartingGame.startGame()];
-        players = StartingGame.createplayers(players);
+        players = StartingGame.createplayers(players, Game.setWeapons());
 
 
 
