@@ -1,5 +1,6 @@
 package nl.pro;
 
+import java.awt.event.KeyEvent;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -11,17 +12,21 @@ public class StartingGame {
     private  static int defense;
 
 
-        public static Players[] createplayers(Players[] players){
+        public static Players[] createplayers(Players[] players, Weapons[] weapons){
 
         for (int i = 0; i < players.length; i++)
         {
-            System.out.println("Player " + i + " type your username");
+            int playernumber = i + 1;
+            System.out.println("speler " + playernumber + " type je gebruikersnaam ");
             String name = sc.next();
 
             players[i] = new Players( name, healt, randomStats(attack), randomStats(defense), maxWeight);
 
+            System.out.println("\n////////////////////////////////////////////////////////////////////////////////////");
+            System.out.println(players[i].getName() + " jouw levens punten zijn: " + players[i].getHealt() +  " jouw aanvalskracht is: " + players[i].getAttack() + " jouw verdedeging is: " + players[i].getDefence());
+            System.out.println("////////////////////////////////////////////////////////////////////////////////////\n");
 
-
+            selectweapon(weapons, players[i]);
 
         }
 
@@ -51,6 +56,34 @@ public class StartingGame {
             }
 
 
+        }
+    }
+
+    private static void selectweapon(Weapons[] weapons, Players players)
+    {
+        int maxweight = players.getMaxWeight();
+        while(true) {
+            while (true) {
+                System.out.println("\ntype de naam van het wapen dat je wild gebruiken");
+
+                System.out.println("\n/////////////////////////////////////////////");
+                for (int o = 0; o < weapons.length; o++) {
+                    System.out.println(weapons[o].getName() + " kracht: " + weapons[o].getStrength() + " gewicht: " + weapons[o].getWeight());
+                }
+                System.out.println("/////////////////////////////////////////////");
+
+                String choise = sc.next();
+
+                for (int o = 0; o < weapons.length; o++) {
+                    if (choise.equals(weapons[o].getName())) {
+                        players.setWeaponchoise(choise);
+                        maxweight -= weapons[o].getWeight();
+                        return;
+                    }
+                }
+                System.out.println("dit wapen bestaat niet");
+
+            }
         }
     }
 }
